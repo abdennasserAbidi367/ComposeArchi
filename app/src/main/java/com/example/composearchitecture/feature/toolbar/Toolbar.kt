@@ -9,9 +9,12 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Blue
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,7 @@ fun CustomTopAppBar(title: String, showBackIcon : Boolean) {
             Text(text = title, style = TextStyle(fontSize = 40.sp, color = Color.Black))
         },
         modifier = Modifier.background(Color.Blue),
+        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Blue),
         navigationIcon = {
             if (showBackIcon) {
                 run {
