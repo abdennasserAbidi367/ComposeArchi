@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -44,11 +45,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.example.composearchitecture.feature.toolbar.CustomTopAppBar
 import com.example.composearchitecture.ui.theme.ComposedLibThemeSurface
 import com.example.composearchitecture.ui.theme.Purple500
 import com.example.composearchitecture.ui.theme.Purple700
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -59,21 +60,28 @@ internal fun LoginScreen(onClick: () -> Unit) {
             CustomTopAppBar("Signup", true)
         }, content = {
             Surface(modifier = Modifier.padding(it.calculateTopPadding())) {
-                Column(
-                    modifier = Modifier.padding(20.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
+                ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+                    val (text, textField1, textField2, box, clickableText1, clickableText2) = createRefs()
 
                     var textState by remember { mutableStateOf("") }
                     val username = remember { mutableStateOf(TextFieldValue()) }
                     val password = remember { mutableStateOf(TextFieldValue()) }
 
-                    Text(text = "Login", modifier = Modifier.fillMaxSize(0.15f), style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Text(text = "Login",
+                        modifier = Modifier.constrainAs(text) {
+                                top.linkTo(parent.top, margin = 16.dp)
+                                start.linkTo(textField1.start, margin = 16.dp)
+                                end.linkTo(textField1.end, margin = 16.dp)
+                            },
+                        style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
+
                     TextField(
                         shape = RoundedCornerShape(20.dp),
-                        modifier = Modifier.border(BorderStroke(width = 2.dp, color = Purple500), shape = RoundedCornerShape(20.dp)),
+                        modifier = Modifier.constrainAs(textField1) {
+                            top.linkTo(text.bottom, margin = 16.dp)
+                            start.linkTo(parent.start, margin = 16.dp)
+                            end.linkTo(parent.end, margin = 16.dp)
+                        }.border(BorderStroke(width = 2.dp, color = Purple500), shape = RoundedCornerShape(20.dp)),
                         colors = TextFieldDefaults.textFieldColors(
                             cursorColor = Color.Black,
                             disabledLabelColor = Color.Blue,
@@ -102,16 +110,50 @@ internal fun LoginScreen(onClick: () -> Unit) {
                         value = username.value,
                         onValueChange = { username.value = it }
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
+
                     TextField(
+                        shape = RoundedCornerShape(20.dp),
+                        modifier = Modifier.constrainAs(textField2) {
+                            top.linkTo(textField1.bottom, margin = 16.dp)
+                            start.linkTo(parent.start, margin = 16.dp)
+                            end.linkTo(parent.end, margin = 16.dp)
+                        }.border(BorderStroke(width = 2.dp, color = Purple500), shape = RoundedCornerShape(20.dp)),
+                        colors = TextFieldDefaults.textFieldColors(
+                            cursorColor = Color.Black,
+                            disabledLabelColor = Color.Blue,
+                            focusedIndicatorColor = Color.Transparent,
+                            unfocusedIndicatorColor = Color.Transparent
+                        ),
+                        singleLine = true,
+                        trailingIcon = {
+                            if (textState.isNotEmpty()) {
+                                IconButton(onClick = { textState = "" }) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Close,
+                                        contentDescription = null
+                                    )
+                                }
+                            } else {
+                                IconButton(onClick = {}) {
+                                    Icon(
+                                        imageVector = Icons.Outlined.Add,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        },
                         label = { Text(text = "Password") },
                         value = password.value,
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                         onValueChange = { password.value = it }
                     )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
+
+                    Box(modifier = Modifier.constrainAs(box) {
+                        top.linkTo(textField2.bottom, margin = 16.dp)
+                        start.linkTo(parent.start, margin = 16.dp)
+                        end.linkTo(parent.end, margin = 16.dp)
+                    }.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                         Button(
                             onClick = {},
                             shape = RoundedCornerShape(50.dp),
@@ -122,8 +164,13 @@ internal fun LoginScreen(onClick: () -> Unit) {
                             Text(text = "Login")
                         }
                     }
-                    Spacer(modifier = Modifier.height(20.dp))
+
                     ClickableText(
+                        modifier = Modifier.padding(20.dp).constrainAs(clickableText1) {
+                            top.linkTo(box.bottom, margin = 16.dp)
+                            start.linkTo(parent.start, margin = 16.dp)
+                            end.linkTo(parent.end, margin = 16.dp)
+                        },
                         text = AnnotatedString("Forgot password?"),
                         onClick = { },
                         style = TextStyle(
@@ -134,7 +181,13 @@ internal fun LoginScreen(onClick: () -> Unit) {
 
                     ClickableText(
                         text = AnnotatedString("Sign up here"),
-                        modifier = Modifier.padding(20.dp),
+                        modifier = Modifier.padding(20.dp).constrainAs(clickableText2) {
+                            /*top.linkTo(box.bottom, margin = 16.dp)
+                            bottom.linkTo(parent.bottom, margin = 16.dp)*/
+                            linkTo(box.bottom, parent.bottom, bias = 0.9f)
+                            start.linkTo(parent.start, margin = 16.dp)
+                            end.linkTo(parent.end, margin = 16.dp)
+                        },
                         onClick = {onClick},
                         style = TextStyle(
                             fontSize = 14.sp,
@@ -143,7 +196,15 @@ internal fun LoginScreen(onClick: () -> Unit) {
                             color = Purple700
                         )
                     )
+
+
+
+
                 }
+
+
+
+
             }
         })
     }

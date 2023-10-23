@@ -91,4 +91,6 @@ dependencies {
     //hilt
     implementation(libs.bundles.hilt)
     kapt(libs.bundles.hilt.kapt)
+    implementation(libs.compose.constraint)
+
 }
