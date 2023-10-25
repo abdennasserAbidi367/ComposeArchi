@@ -81,7 +81,7 @@ private fun AppScaffold(
     showAnimations: Boolean,
     navigatorDirections: NavigatorDirections,
     bottomNavigationEntries: ImmutableHolder<List<BottomNavigationEntry>>,
-    navigator: Navigator,
+    navigator: Navigator
 ) {
     val bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator()
     val navController: NavHostController = rememberNavController(bottomSheetNavigator)

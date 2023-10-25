@@ -57,7 +57,7 @@ import com.example.composearchitecture.ui.theme.Purple700
 internal fun LoginScreen(onClick: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(topBar = {
-            CustomTopAppBar("Signup", true)
+            CustomTopAppBar("SignIn", true)
         }, content = {
             Surface(modifier = Modifier.padding(it.calculateTopPadding())) {
                 ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -155,7 +155,7 @@ internal fun LoginScreen(onClick: () -> Unit) {
                         end.linkTo(parent.end, margin = 16.dp)
                     }.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                         Button(
-                            onClick = {},
+                            onClick = {onClick},
                             shape = RoundedCornerShape(50.dp),
                             modifier = Modifier
                                 .fillMaxWidth(0.9f)
@@ -182,8 +182,6 @@ internal fun LoginScreen(onClick: () -> Unit) {
                     ClickableText(
                         text = AnnotatedString("Sign up here"),
                         modifier = Modifier.padding(20.dp).constrainAs(clickableText2) {
-                            /*top.linkTo(box.bottom, margin = 16.dp)
-                            bottom.linkTo(parent.bottom, margin = 16.dp)*/
                             linkTo(box.bottom, parent.bottom, bias = 0.9f)
                             start.linkTo(parent.start, margin = 16.dp)
                             end.linkTo(parent.end, margin = 16.dp)
