@@ -1,6 +1,7 @@
 package com.example.composearchitecture.feature.login
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +48,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.Lifecycle
+import com.example.composearchitecture.feature.home.rememberLifecycleEvent
 import com.example.composearchitecture.feature.toolbar.CustomTopAppBar
 import com.example.composearchitecture.ui.theme.ComposedLibThemeSurface
 import com.example.composearchitecture.ui.theme.Purple500
@@ -55,6 +59,17 @@ import com.example.composearchitecture.ui.theme.Purple700
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 internal fun LoginScreen(onClick: () -> Unit) {
+
+    val lifecycleEvent = rememberLifecycleEvent()
+    LaunchedEffect(lifecycleEvent) {
+        Log.i("lifecycleExp", "login: $lifecycleEvent")
+
+        if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
+            // initiate data reloading
+            //Log.i("lifecycleExp", "HomeScreen: Is resumed")
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         Scaffold(topBar = {
             CustomTopAppBar("SignIn", true)

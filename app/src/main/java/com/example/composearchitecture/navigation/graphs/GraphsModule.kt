@@ -2,6 +2,7 @@ package com.example.composearchitecture.navigation.graphs
 
 import com.example.composearchitecture.navigation.base.NavigationGraph
 import com.example.composearchitecture.navigation.destinations.home.graph.HomeGraph
+import com.example.composearchitecture.navigation.destinations.login.LoginGraph
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,6 +18,11 @@ internal abstract class GraphsModule {
     @IntoMap
     @ClassKey(HomeGraph::class)
     abstract fun homeGraph(graph: HomeGraph): NavigationGraph
+
+    @Binds
+    @IntoMap
+    @ClassKey(LoginGraph::class)
+    abstract fun loginGraph(graph: LoginGraph): NavigationGraph
 
     /*@Binds
     @IntoMap

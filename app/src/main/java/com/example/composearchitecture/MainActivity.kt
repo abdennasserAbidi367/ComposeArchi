@@ -27,7 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.example.composearchitecture.navigation.TopLevelDestinationsProvider
+import com.example.composearchitecture.bottombar.TopLevelDestinationsProvider
 import com.example.composearchitecture.navigation.base.ImmutableHolder
 import com.example.composearchitecture.navigation.base.NavigationGraph
 import com.example.composearchitecture.navigation.base.NavigationGraphEntry

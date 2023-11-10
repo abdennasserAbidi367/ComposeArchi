@@ -114,6 +114,7 @@ testImplementation-runtime-jupiter-engine = { module = "org.junit.jupiter:junit-
 androidx-animation-android = { group = "androidx.compose.animation", name = "animation-android", version = "1.5.3" }
 #work
 work = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version = "1.3.2" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
